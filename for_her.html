@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>For You ❤️</title>
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        background: black;
+        overflow: hidden;
+        cursor: none;
+        font-family: Arial, sans-serif;
+      }
+
+      /* 💖 Hearts (clean, no glow) */
+      .heart {
+        position: absolute;
+        font-size: 36px;
+        pointer-events: none;
+        animation: floatUp 1s linear forwards;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-70px) scale(1.6);
+          opacity: 0;
+        }
+      }
+
+      /* 💞 Message (minimal style) */
+      .message {
+        position: fixed;
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+
+        color: #fff;
+        font-size: 24px;
+        text-align: center;
+        padding: 12px 20px;
+
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="msg" class="message">This is how my heart follows you 💖</div>
+
+    <script>
+      function createHeart(x, y) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤";
+
+        const colors = ["#ff4d6d", "#ff85a1", "#ff99ac"];
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1000);
+      }
+
+      // 💖 Mouse trail
+      document.addEventListener("mousemove", (e) => {
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => createHeart(e.clientX, e.clientY), i * 40);
+        }
+      });
+
+      // 📱 Touch trail
+      document.addEventListener("touchmove", (e) => {
+        const touch = e.touches[0];
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => createHeart(touch.clientX, touch.clientY), i * 40);
+        }
+      });
+
+      // 💞 Double tap
+      let lastTap = 0;
+
+      document.addEventListener("touchend", function () {
+        let currentTime = new Date().getTime();
+        let tapLength = currentTime - lastTap;
+
+        if (tapLength < 300 && tapLength > 0) {
+          showMessage();
+        }
+        lastTap = currentTime;
+      });
+
+      // 💞 Double click
+      document.addEventListener("dblclick", showMessage);
+
+      // 💌 Show message
+      function showMessage() {
+        const msg = document.getElementById("msg");
+        msg.classList.add("show");
+
+        setTimeout(() => {
+          msg.classList.remove("show");
+        }, 2500);
+      }
+    </script>
+  </body>
+</html>
