@@ -14,7 +14,7 @@
         font-family: Arial, sans-serif;
       }
 
-      /* 💖 Hearts (clean, no glow) */
+      /* 💖 Hearts */
       .heart {
         position: absolute;
         font-size: 36px;
@@ -33,7 +33,7 @@
         }
       }
 
-      /* 💞 Message (minimal style) */
+      /* 💞 Message */
       .message {
         position: fixed;
         top: 65%;
@@ -56,11 +56,38 @@
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
       }
+
+      /* 💡 Hint (first visit) */
+      .hint {
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 16px;
+        text-align: center;
+        line-height: 1.5;
+
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .hint.show {
+        opacity: 1;
+      }
     </style>
   </head>
 
   <body>
+    <!-- 💞 Message -->
     <div id="msg" class="message">This is how my heart follows you 💖</div>
+
+    <!-- 💡 Hint -->
+    <div id="hint" class="hint">
+      Tap & move 💖<br />
+      Double tap to read message
+    </div>
 
     <script>
       function createHeart(x, y) {
@@ -107,7 +134,7 @@
         lastTap = currentTime;
       });
 
-      // 💞 Double click
+      // 💞 Double click (desktop)
       document.addEventListener("dblclick", showMessage);
 
       // 💌 Show message
@@ -119,6 +146,21 @@
           msg.classList.remove("show");
         }, 2500);
       }
+
+      // 💡 Show hint only first time
+      window.addEventListener("load", () => {
+        const hint = document.getElementById("hint");
+
+        if (!localStorage.getItem("visited")) {
+          hint.classList.add("show");
+
+          setTimeout(() => {
+            hint.classList.remove("show");
+          }, 3000);
+
+          localStorage.setItem("visited", "true");
+        }
+      });
     </script>
   </body>
 </html>
