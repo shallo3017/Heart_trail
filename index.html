@@ -1,166 +1,172 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>For You ❤️</title>
+<head>
+<meta charset="UTF-8" />
+<title>For You ❤️</title>
 
-    <style>
-      body {
-        margin: 0;
-        height: 100vh;
-        background: black;
-        overflow: hidden;
-        cursor: none;
-        font-family: Arial, sans-serif;
-      }
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: black;
+    overflow: hidden;
+    cursor: none;
+    font-family: Arial, sans-serif;
+  }
 
-      /* 💖 Hearts */
-      .heart {
-        position: absolute;
-        font-size: 36px;
-        pointer-events: none;
-        animation: floatUp 1s linear forwards;
-      }
+  /* 💖 Hearts */
+  .heart {
+    position: absolute;
+    font-size: 36px;
+    pointer-events: none;
+    animation: floatUp 1s linear forwards;
+  }
 
-      @keyframes floatUp {
-        0% {
-          transform: translateY(0) scale(1);
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(-70px) scale(1.6);
-          opacity: 0;
-        }
-      }
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-70px) scale(1.6);
+      opacity: 0;
+    }
+  }
 
-      /* 💞 Message */
-      .message {
-        position: fixed;
-        top: 65%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.9);
+  /* 💞 Message */
+  .message {
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
 
-        color: #fff;
-        font-size: 24px;
-        text-align: center;
-        padding: 12px 20px;
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    padding: 12px 20px;
 
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
 
-        opacity: 0;
-        transition: all 0.3s ease;
-      }
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
 
-      .show {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
+  .show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 
-      /* 💡 Hint (first visit) */
-      .hint {
-        position: fixed;
-        top: 20%;
-        left: 50%;
-        transform: translateX(-50%);
+  /* 💡 Hint */
+  .hint {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
 
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 16px;
-        text-align: center;
-        line-height: 1.5;
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.5;
 
-        opacity: 0;
-        transition: opacity 0.5s ease;
-      }
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
 
-      .hint.show {
-        opacity: 1;
-      }
-    </style>
-  </head>
+  .hint.show {
+    opacity: 1;
+  }
+</style>
+</head>
 
-  <body>
-    <!-- 💞 Message -->
-    <div id="msg" class="message">This is how my heart follows you 💖</div>
+<body>
 
-    <!-- 💡 Hint -->
-    <div id="hint" class="hint">
-      Tap & move 💖<br />
-      Double tap to read message
-    </div>
+<!-- 💞 Message -->
+<div id="msg" class="message">
+  This is how my heart follows you 💖
+</div>
 
-    <script>
-      function createHeart(x, y) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤";
+<!-- 💡 Hint -->
+<div id="hint" class="hint">
+  Tap & move 💖<br>
+  Double tap to read message
+</div>
 
-        const colors = ["#ff4d6d", "#ff85a1", "#ff99ac"];
-        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+<script>
+function createHeart(x, y) {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤";
 
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
+  const colors = ["#ff4d6d", "#ff85a1", "#ff99ac"];
+  heart.style.color = colors[Math.floor(Math.random() * colors.length)];
 
-        document.body.appendChild(heart);
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
 
-        setTimeout(() => heart.remove(), 1000);
-      }
+  document.body.appendChild(heart);
 
-      // 💖 Mouse trail
-      document.addEventListener("mousemove", (e) => {
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => createHeart(e.clientX, e.clientY), i * 40);
-        }
-      });
+  setTimeout(() => heart.remove(), 1000);
+}
 
-      // 📱 Touch trail
-      document.addEventListener("touchmove", (e) => {
-        const touch = e.touches[0];
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => createHeart(touch.clientX, touch.clientY), i * 40);
-        }
-      });
+// 💖 Mouse trail
+document.addEventListener("mousemove", (e) => {
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => createHeart(e.clientX, e.clientY), i * 40);
+  }
+});
 
-      // 💞 Double tap
-      let lastTap = 0;
+// 📱 Touch trail
+document.addEventListener("touchmove", (e) => {
+  const touch = e.touches[0];
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => createHeart(touch.clientX, touch.clientY), i * 40);
+  }
+});
 
-      document.addEventListener("touchend", function () {
-        let currentTime = new Date().getTime();
-        let tapLength = currentTime - lastTap;
+// 💞 Double tap
+let lastTap = 0;
 
-        if (tapLength < 300 && tapLength > 0) {
-          showMessage();
-        }
-        lastTap = currentTime;
-      });
+document.addEventListener("touchend", function () {
+  let currentTime = new Date().getTime();
+  let tapLength = currentTime - lastTap;
 
-      // 💞 Double click (desktop)
-      document.addEventListener("dblclick", showMessage);
+  if (tapLength < 300 && tapLength > 0) {
+    showMessage();
+  }
+  lastTap = currentTime;
+});
 
-      // 💌 Show message
-      function showMessage() {
-        const msg = document.getElementById("msg");
-        msg.classList.add("show");
+// 💞 Double click (desktop)
+document.addEventListener("dblclick", showMessage);
 
-        setTimeout(() => {
-          msg.classList.remove("show");
-        }, 2500);
-      }
+// 💌 Show message
+function showMessage() {
+  const msg = document.getElementById("msg");
+  msg.classList.add("show");
 
-      // 💡 Show hint only first time
-      window.addEventListener("load", () => {
-        const hint = document.getElementById("hint");
+  setTimeout(() => {
+    msg.classList.remove("show");
+  }, 2500);
+}
 
-        if (!localStorage.getItem("visited")) {
-          hint.classList.add("show");
+// 💡 Mobile-safe hint (FIXED)
+document.addEventListener("DOMContentLoaded", () => {
+  const hint = document.getElementById("hint");
 
-          setTimeout(() => {
-            hint.classList.remove("show");
-          }, 3000);
+  setTimeout(() => {
+    if (!sessionStorage.getItem("visited")) {
+      hint.classList.add("show");
 
-          localStorage.setItem("visited", "true");
-        }
-      });
-    </script>
-  </body>
+      setTimeout(() => {
+        hint.classList.remove("show");
+      }, 3000);
+
+      sessionStorage.setItem("visited", "true");
+    }
+  }, 300);
+});
+</script>
+
+</body>
 </html>
